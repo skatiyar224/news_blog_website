@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Allow direct access to existing files and directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route Article_read requests correctly before the general routing rule
+RewriteRule ^Article_read/([a-zA-Z0-9_-]+)/?$ Article_read.php?slug=$1 [L,QSA]
+
+# Redirect all other requests to router.php
+RewriteRule ^(.*)$ router.php?route=$1 [L,QSA]
